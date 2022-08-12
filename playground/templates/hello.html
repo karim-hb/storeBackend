@@ -1,0 +1,14 @@
+<html>
+  <body>
+    {% if temp %}
+    <h1> {{ temp }}</h1>
+    {% else %}
+    <h1>Hello World</h1>
+    {% endif %}
+    <ul>
+    {% for item in products%}
+    <li>{{ item.order_count}}</li>
+    {% endfor %}
+    </ul>
+  </body>
+</html>
