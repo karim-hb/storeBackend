@@ -20,6 +20,10 @@ class InventoryFilter(admin.SimpleListFilter):
             return queryset.filter(inventory__lt=10)
 
 
+class ProductImageInline(admin.TabularInline):
+    model=models.ProdctImages
+    
+    
 @admin.register(models.Product)
 class ProductAdmin(admin.ModelAdmin):
     autocomplete_fields = ['collection']
@@ -31,6 +35,7 @@ class ProductAdmin(admin.ModelAdmin):
                     'inventory_status', 'collection_title']
     list_editable = ['unit_price']
     list_filter = ['collection', 'last_update', InventoryFilter]
+    inlines=[ProductImageInline]
     list_per_page = 10
     list_select_related = ['collection']
     search_fields = ['title']

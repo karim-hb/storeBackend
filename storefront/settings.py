@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -39,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_filters',
     'rest_framework',
+    "corsheaders",
     'djoser',
     'drf_spectacular',
     'storefront',
@@ -51,6 +53,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -59,6 +62,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
 
 ROOT_URLCONF = 'storefront.urls'
 
@@ -85,6 +89,10 @@ INTERNAL_IPS = [
     '127.0.0.1',
     # ...
 ] 
+
+CORS_ALLOWED_ORIGINS=[
+    'http://localhost:3000'
+]
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
@@ -135,6 +143,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
+MEDIA_URL= '/media/'
+MEDIA_ROOT= os.path.join(BASE_DIR, 'mdeia')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -161,3 +171,9 @@ DJOSER= {
     }
 }
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST="localhost"
+EMAIL_HOST_USER=""
+EMAIL_HOST_PASSWORD=""
+EMAIL_PORT=2525
+DEFAULT_FROM_EMAIL="karmbadkhshany@gmail.com"

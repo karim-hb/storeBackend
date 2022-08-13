@@ -12,6 +12,9 @@ django-filter = "*"
 djoser = "*"
 djangorestframework-simplejwt = "*"
 drf-spectacular = "*"
+pillow = "*"
+django-cors-headers = "*"
+redis = "*"
 
 [dev-packages]
 

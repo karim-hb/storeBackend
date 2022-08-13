@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.db.models import Q,F
 from django.db.models.aggregates import Sum,Count,Min,Max
 from django.contrib.contenttypes.models import ContentType
-
+from django.core.mail import send_mail,BadHeaderError
 from store.models import Product , Customer , Collection,OrderItem,Order
 from tags.models import TaggedItem
 
@@ -23,4 +23,8 @@ def say_hello(request):
     #data = Customer.objects.annotate(order_count = Sum(F('order__orderitem__unit_price') * F('order__orderitem__quantity') ))
     #data = Customer.objects.annotate(order_count = Sum(F('order__orderitem__unit_price') * F('order__orderitem__quantity') )).order_by('-order_count')[:5]
     data = TaggedItem.objects.get_tags_for(Product,1)
+    try:
+        send_mail('subject','description','karmbadkhshany@gmail.com',['karmbadkhshany@gmail.com'])
+    except BadHeaderError:
+        pass
     return render(request, 'hello.html', {'products':list(data),'temp':temp})

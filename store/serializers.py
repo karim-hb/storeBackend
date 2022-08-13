@@ -1,5 +1,5 @@
 from decimal import Decimal
-from .models import Cart, CartItem, Customer, Order, OrderItem, Product, Collection, Review
+from .models import Cart, CartItem, Customer, Order, OrderItem, ProdctImages, Product, Collection, Review
 from rest_framework import serializers
 from django.db import transaction
 
@@ -9,13 +9,24 @@ class CollectionSerializer(serializers.ModelSerializer):
         fields = ['id', 'title', 'products_count']
 
     products_count = serializers.IntegerField(read_only=True)
-
+    
+    
+class ProductImageSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = ProdctImages
+        fields = ['id','image','product_id']
+    
+    def create(self, validated_data):
+        product_id = self.context['product_id']
+        return ProdctImages.objects.create(product_id=product_id, **validated_data)
+    
 
 class ProductSerializer(serializers.ModelSerializer):
+    images= ProductImageSerializers(many=True,read_only=True)
     class Meta:
         model = Product
         fields = ['id', 'title', 'description', 'slug', 'inventory',
-                  'unit_price', 'price_with_tax', 'collection']
+                  'unit_price', 'price_with_tax', 'collection','images']
 
     price_with_tax = serializers.SerializerMethodField(
         method_name='calculate_tax')
@@ -163,3 +174,4 @@ class UpdateOrderService(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = ['payment_status']
+
